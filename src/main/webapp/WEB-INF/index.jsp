@@ -11,6 +11,12 @@
             <jsp:param name="userType" value="${userType}" />
         </jsp:include>
 
+        <c:if test="${not empty error}">
+            <div class="alert alert-danger" role="alert">
+                <c:out value="${error}"/>
+              </div>
+        </c:if>
+
         <div class="container"> 
             <div class="row">
                 <div class="col-3">

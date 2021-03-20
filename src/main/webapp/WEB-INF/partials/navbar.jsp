@@ -18,17 +18,17 @@
         <div class="bg-dark w-100">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-row ">
                 <li class="nav-item px-2 ">
-                    <a class="nav-link text-white active " aria-current="page" href="#">Home</a>
+                    <a class="nav-link text-white active " aria-current="page" href="/">Home</a>
                 </li>
                 <!-- Test if logged in -->
                 <c:if test="${empty param.userType}">
                     <li class="nav-item px-2">
-                        <a class="nav-link text-white" href="#">Login</a>
+                        <a class="nav-link text-white" href="/login">Login</a>
                     </li>
                 </c:if>    
                 <c:if test="${not empty param.userType}">
                     <li class="nav-item px-2">
-                        <a class="nav-link text-white" href="#">Profile</a>
+                        <a class="nav-link text-white" href="/user">Profile</a>
                     </li>
                 </c:if>   
             </ul>
