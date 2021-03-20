@@ -1,0 +1,44 @@
+I want to post an ad on the website
+I want to look at an ad on the website
+i want to see more ads from a user
+
+
+------ Pages -----
+
+index - this page is the landing page where we see categories, list of advertisements, and links to login if we are not register or look at our profile page if we are logged in
+
+post - this will an advertisement given an ID, including pictures. At the bottom of the page will be more ads that the user has posted as well. If no ID is given, it will display an error then refresh to the home page after 5 seconds
+
+login - this will be the login page, it will redirect to profile page if already logged in
+
+post/edit - this will let a logged in user edit a post given the id and checking if they have ownership of that ad. otherwise it will display and error and refresh to the home page after 5 seconds
+
+post/add - this will let a logged in user create a new post, otherwise it will display and error and refresh to the home page after 5 seconds
+
+search - using a query we will search for an advertisement by name
+
+post/delete - this will let a logged in user confirm if they want to delete an advertisement before continuing. otherwise it will display and error and refresh to the home page after 5 seconds
+
+------ Beans ------
+
+Ad 
+ - id
+ - userID
+ - price
+ - username
+ - title
+ - description
+ - images
+ 
+User
+ - id
+ - username
+ - email
+ 
+Category
+  - id
+  - name
+  
+
+ 
+
