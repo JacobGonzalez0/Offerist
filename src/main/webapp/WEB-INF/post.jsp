@@ -3,7 +3,7 @@
 
 <html>
     <jsp:include page="/WEB-INF/partials/head.jsp">
-        <jsp:param name="title" value="<c:out value='${ad.title}' />" />
+        <jsp:param name="title" value="${ad.title}" />
     </jsp:include>
     <body>
 

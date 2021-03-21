@@ -1,5 +1,6 @@
 package dao;
 
+import com.mysql.cj.api.jdbc.Statement;
 import com.mysql.cj.jdbc.Driver;
 
 import java.sql.Connection;
@@ -33,11 +34,11 @@ public class UsersDao implements Users{
         PreparedStatement stmt = null;
         try {
             //gets all the information from the tables we need
-            stmt = connection.prepareStatement("SELECT posts.user_id as user_id , posts.title as title, posts.id as post_id, posts.price as price, posts.content as content, users.username as username FROM posts JOIN users on users.id = posts.user_id;");
+            stmt = connection.prepareStatement("SELECT * FROM users");
             ResultSet rs = stmt.executeQuery();
             return createUsersFromResults(rs);
         } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving all ads.", e);
+            throw new RuntimeException("Error retrieving all users.", e);
         }
     }
 
@@ -45,12 +46,32 @@ public class UsersDao implements Users{
         PreparedStatement stmt = null;
         try {
             //gets all the information from the tables we need
-            stmt = connection.prepareStatement("SELECT posts.user_id as user_id , posts.title as title, posts.id as post_id, posts.price as price, posts.content as content, users.username as username FROM posts JOIN users on users.id = posts.user_id WHERE posts.id = ?;");
+            stmt = connection.prepareStatement("SELECT * FROM users WHERE id = ?");
             stmt.setLong(1, id);
             ResultSet rs = stmt.executeQuery();
             return createUsersFromResults(rs).get(0);
         } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving ad by id.", e);
+            throw new RuntimeException("Error retrieving user by id.", e);
+        }
+    }
+
+    public boolean exists(String username, String email) {
+        PreparedStatement stmt = null;
+        try {
+            //gets all the information from the tables we need
+            stmt = connection.prepareStatement("SELECT * FROM users WHERE username = ? OR email = ?");
+            stmt.setString(1, username);
+            stmt.setString(2, email);
+            ResultSet rs = stmt.executeQuery();
+            rs.last();    
+            int size = rs.getRow(); 
+            if(size == 0){
+                return false;
+            }else{
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving user by id.", e);
         }
     }
 
@@ -73,7 +94,18 @@ public class UsersDao implements Users{
 
     @Override
     public Long insert(User user) {
-        
-        return null;
+        String query = "INSERT INTO users(username, email, password) VALUES (?, ?, ?)";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, user.getUsername());
+            stmt.setString(2, user.getEmail());
+            stmt.setString(3, user.getPassword());
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+            rs.next();
+            return rs.getLong(1);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error creating new user", e);
+        }
     }
 }

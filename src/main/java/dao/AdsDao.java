@@ -55,6 +55,19 @@ public class AdsDao implements Ads{
         }
     }
 
+    public List<Ad> byUserId(Long id) {
+        PreparedStatement stmt = null;
+        try {
+            //gets all the information from the tables we need
+            stmt = connection.prepareStatement("SELECT posts.user_id as user_id , posts.title as title, posts.id as post_id, posts.price as price, posts.content as content, users.username as username FROM posts JOIN users on users.id = posts.user_id WHERE posts.user_id = ?;");
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+            return createAdsFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving ad by id.", e);
+        }
+    }
+
     private List<Ad> createAdsFromResults(ResultSet rs) throws SQLException {
         List<Ad> ads = new ArrayList<>();
         while (rs.next()) {

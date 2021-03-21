@@ -11,4 +11,6 @@ public interface Users {
     Long insert(User user);
 
     User byId(Long id);
+
+    boolean exists(String username, String email);
 }

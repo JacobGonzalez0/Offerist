@@ -1,8 +1,8 @@
 
 <nav class="navbar navbar-expand-sm navbar-light bg-light py-3">
     <div class="container-fluid d-flex d-flex-lg justify-content-between">
-        <a href="#" class="navbar-brand">Adlister</a>
-        <form action="" class="d-flex">
+        <a href="/" class="navbar-brand">Offerist</a>
+        <form action="/search" method="GET" class="d-flex">
             <input class="form-control" type="text" placeholder="Search"/>
             <button class="btn btn-primary ms-2">
                 <i class="fas fa-search"></i>

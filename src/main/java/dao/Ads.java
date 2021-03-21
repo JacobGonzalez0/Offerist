@@ -11,4 +11,6 @@ public interface Ads {
     Long insert(Ad ad);
 
     List<Ad> byId(Long id);
+
+    List<Ad> byUserId(Long id);
 }
