@@ -34,9 +34,6 @@ public class PostServlet extends HttpServlet {
             }
         }
         
-
-        
-        
     }
 
 }

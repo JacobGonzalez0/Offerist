@@ -13,4 +13,8 @@ public interface Users {
     User byId(Long id);
 
     boolean exists(String username, String email);
+
+    boolean checkPassword(String username, String password);
+
+    User byUsername(String username);
 }

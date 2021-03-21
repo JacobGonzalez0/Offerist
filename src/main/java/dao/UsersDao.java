@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.mindrot.jbcrypt.BCrypt;
 
 import models.User;
 
@@ -55,6 +56,19 @@ public class UsersDao implements Users{
         }
     }
 
+    public User byUsername(String username){
+        PreparedStatement stmt = null;
+        try {
+            //gets all the information from the tables we need
+            stmt = connection.prepareStatement("SELECT * FROM users WHERE username = ?");
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            return createUsersFromResults(rs).get(0);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving user by id.", e);
+        }
+    }
+
     public boolean exists(String username, String email) {
         PreparedStatement stmt = null;
         try {
@@ -70,6 +84,20 @@ public class UsersDao implements Users{
             }else{
                 return true;
             }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving user by id.", e);
+        }
+    }
+
+    public boolean checkPassword(String username, String password) {
+        PreparedStatement stmt = null;
+        try {
+            //gets all the information from the tables we need
+            stmt = connection.prepareStatement("SELECT * FROM users WHERE username = ? ");
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            return BCrypt.checkpw(password, rs.getString("password"));
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving user by id.", e);
         }
