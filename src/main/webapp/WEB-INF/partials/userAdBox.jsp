@@ -11,6 +11,13 @@
         <div class="py-2">
             <c:out value="${param.price}"/>
         </div>
-        
+        <div class="btn-group w-100" role="group" aria-label="user-controls">
+            <a href="post/edit">    
+                <button type="button" class="btn btn-primary">Edit</button>
+            </a>
+            <a href="post/edit">
+                <button type="button" class="btn btn-danger">Delete</button>
+            </a>
+        </div>
     </div>
 </a>
