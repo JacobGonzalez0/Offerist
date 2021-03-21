@@ -15,8 +15,6 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import models.User;
 
-
-
 public class UsersDao implements Users{
     private Connection connection = null;
     

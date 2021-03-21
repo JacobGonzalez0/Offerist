@@ -135,7 +135,18 @@ public class AdsDao implements Ads{
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             rs.next();
-            return rs.getLong(1);
+            long postId = rs.getLong(1);
+
+            //clear the connection objects
+            //inserts only first image uploaded
+            stmt = null;
+            insertQuery = "INSERT INTO INSERT images(post_id, url, description) VALUES (?, ?, ?, ?)";
+            stmt = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
+            stmt.setLong(1, postId);
+            stmt.setString(2, ad.getImages().get(0));
+            stmt.setString(3, "Placeholder value");
+            
+            return postId;
         } catch (SQLException e) {
             throw new RuntimeException("Error creating a new ad.", e);
         }

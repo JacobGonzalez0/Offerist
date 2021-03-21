@@ -3,7 +3,7 @@
 
 <html>
     <jsp:include page="/WEB-INF/partials/head.jsp">
-        <jsp:param name="title" value="Register" />
+        <jsp:param name="title" value="Post - New Post" />
     </jsp:include>
     <body>
 
@@ -29,22 +29,22 @@
             <div class="row">
 
                 <div class="d-flex justify-content-center">
-                    <form action="/register" method="post">
+                    <form action="/post/add" method="post" enctype="multipart/form-data">
                         <div class="form-group">
-                            <label for="username">Username</label>
-                            <input id="username" name="username" class="form-control" type="text">
+                            <label for="title">Title</label>
+                            <input id="title" name="title" class="form-control" type="text">
                         </div>
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input id="email" name="email" class="form-control" type="text">
+                            <label for="description">Description</label>
+                            <input id="description" name="description" class="form-control" type="text">
                         </div>
                         <div class="form-group">
-                            <label for="password">Password</label>
-                            <input id="password" name="password" class="form-control" type="password">
+                            <label for="price">Price</label>
+                            <input id="price" name="price" class="form-control" type="text">
                         </div>
                         <div class="form-group">
-                            <label for="confirm">Confirm Password</label>
-                            <input id="confirm" name="confirm" class="form-control" type="password">
+                            <label for="confirm">Image</label>
+                            <input type="file" id="image" name="image">
                         </div>
                         <input type="submit" class="btn btn-primary btn-block">
                     </form>
