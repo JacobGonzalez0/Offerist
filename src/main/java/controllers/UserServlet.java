@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 import dao.DaoFactory;
+import models.User;
 
 @WebServlet(name = "UserServlet", urlPatterns = "/user")
 public class UserServlet extends HttpServlet {
@@ -22,10 +23,21 @@ public class UserServlet extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/user.jsp").forward(request, response);
         }else{
             try{
+                long userId = -1;
+                if(request.getSession().getAttribute("user") != null){
+                    userId = ((User) request.getSession().getAttribute("user")).getId();
+                }
+
                 long id = Long.parseLong(request.getParameter("id"));
                 request.setAttribute("ads", DaoFactory.getAdsDao().byUserId(id) );
                 request.setAttribute("user", DaoFactory.getUsersDao().byId(id) );
-                request.getRequestDispatcher("/WEB-INF/user.jsp").forward(request, response);
+                if(id == userId){
+                    request.setAttribute("self", "1");
+                    request.getRequestDispatcher("/WEB-INF/user.jsp").forward(request, response);
+                }else{
+                    request.getRequestDispatcher("/WEB-INF/user.jsp").forward(request, response);
+                }
+                
 
             }catch(Exception e){
                 System.err.println(e);

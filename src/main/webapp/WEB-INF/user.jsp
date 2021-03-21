@@ -28,22 +28,37 @@
                     <c:out value='${user.email}' />
                     <c:out value='${user.id}' />
                 </div>
-                
-                
+
                 <div class="col-9">
                     <div class="d-flex flex-wrap">
-    
-                        <c:forEach items="${ads}" var="ad">
-                            <jsp:include page="/WEB-INF/partials/adBox.jsp">
-                                <jsp:param name="id" value="${ad.id}" />
-                                <jsp:param name="userId" value="${ad.userId}" />
-                                <jsp:param name="price" value="${ad.price}" />
-                                <jsp:param name="title" value="${ad.title}" />
-                                <jsp:param name="description" value="${ad.description}" />
-                                <jsp:param name="image" value="${ad.images[0]}" />
-                                <jsp:param name="categories" value="${ad.categories}" />
-                            </jsp:include>
-                        </c:forEach>
+                        <c:if test="${empty self}">
+                            <c:forEach items="${ads}" var="ad">
+                                <jsp:include page="/WEB-INF/partials/adBox.jsp">
+                                    <jsp:param name="id" value="${ad.id}" />
+                                    <jsp:param name="userId" value="${ad.userId}" />
+                                    <jsp:param name="price" value="${ad.price}" />
+                                    <jsp:param name="title" value="${ad.title}" />
+                                    <jsp:param name="description" value="${ad.description}" />
+                                    <jsp:param name="image" value="${ad.images[0]}" />
+                                    <jsp:param name="categories" value="${ad.categories}" />
+                                </jsp:include>
+                            </c:forEach>
+                        </c:if>
+                        <c:if test="${not empty self}">
+                            <c:forEach items="${ads}" var="ad">
+                                test
+                                <jsp:include page="/WEB-INF/partials/userAdBox.jsp">
+                                    <jsp:param name="id" value="${ad.id}" />
+                                    <jsp:param name="userId" value="${ad.userId}" />
+                                    <jsp:param name="price" value="${ad.price}" />
+                                    <jsp:param name="title" value="${ad.title}" />
+                                    <jsp:param name="description" value="${ad.description}" />
+                                    <jsp:param name="image" value="${ad.images[0]}" />
+                                    <jsp:param name="categories" value="${ad.categories}" />
+                                </jsp:include>
+                            </c:forEach>
+                        </c:if>
+                        
     
                     </div>
                 </div>

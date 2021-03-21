@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <nav class="navbar navbar-expand-sm navbar-light bg-light py-3">
     <div class="container-fluid d-flex d-flex-lg justify-content-between">
@@ -15,20 +16,28 @@
 </nav>
 <div class="navbar-expand-sm">
     <div class="collapse navbar-collapse w-100" id="navbarText">
-        <div class="bg-dark w-100">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-row ">
+        <div class="bg-dark w-100 d-flex flex-wrap justify-content-between">
+            <ul class="navbar-nav me-auto mb-lg-0 d-flex flex-row ">
                 <li class="nav-item px-2 ">
                     <a class="nav-link text-white active " aria-current="page" href="/">Home</a>
                 </li>
-                <!-- Test if logged in -->
-                <c:if test="${empty param.userType}">
+                
+                <%--  Tests if user is logged in --%>
+                <c:if test="${empty user}">
                     <li class="nav-item px-2">
                         <a class="nav-link text-white" href="/login">Login</a>
                     </li>
                 </c:if>    
-                <c:if test="${not empty param.userType}">
+                <c:if test="${not empty user}">
                     <li class="nav-item px-2">
-                        <a class="nav-link text-white" href="/user">Profile</a>
+                        <a class="nav-link text-white" href="/user?id=<c:out value='${user.id}'/>">Profile</a>
+                    </li>
+                </c:if>   
+            </ul>
+            <ul class="navbar-nav mb-lg-0 text-right d-flex align-items-end flex-wrap justify-content-end">    
+                <c:if test="${not empty user}">
+                    <li class="nav-item px-2">
+                        <a class="nav-link text-white" href="/post/add">New Post</a>
                     </li>
                 </c:if>   
             </ul>
