@@ -1,18 +1,21 @@
 package dao;
 
-import com.mysql.cj.api.jdbc.Statement;
 import com.mysql.cj.jdbc.Driver;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import org.mindrot.jbcrypt.BCrypt;
 
 import models.User;
+
+
 
 public class UsersDao implements Users{
     private Connection connection = null;
@@ -96,8 +99,15 @@ public class UsersDao implements Users{
             stmt = connection.prepareStatement("SELECT * FROM users WHERE username = ? ");
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
-            rs.next();
-            return BCrypt.checkpw(password, rs.getString("password"));
+            if (rs != null) {
+                try{
+                    rs.next();
+                }catch(Exception e){
+                    return false;
+                }
+                return BCrypt.checkpw(password, rs.getString("password"));
+            }
+            return false;
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving user by id.", e);
         }

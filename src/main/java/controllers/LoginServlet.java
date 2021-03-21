@@ -23,7 +23,6 @@ public class LoginServlet extends HttpServlet {
             request.setAttribute("error", "Please enter a username/password");
             request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
         }else{
-
             if(DaoFactory.getUsersDao().checkPassword( request.getParameter("username"), request.getParameter("password"))){
                 User user = DaoFactory.getUsersDao().byUsername(
                     request.getParameter("username")
@@ -34,9 +33,7 @@ public class LoginServlet extends HttpServlet {
                 request.setAttribute("error", "Incorrect Password");
                 request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
             };
-            
         }
-        
     }
 
     @Override

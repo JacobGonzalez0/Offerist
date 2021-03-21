@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -124,7 +125,19 @@ public class AdsDao implements Ads{
 
     @Override
     public Long insert(Ad ad) {
-        // TODO Auto-generated method stub
-        return null;
+        try {
+            String insertQuery = "INSERT INTO posts(user_id, title, content, price) VALUES (?, ?, ?, ?)";
+            PreparedStatement stmt = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
+            stmt.setLong(1, ad.getUserId());
+            stmt.setString(2, ad.getTitle());
+            stmt.setString(3, ad.getDescription());
+            stmt.setDouble(4, ad.getPrice());
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+            rs.next();
+            return rs.getLong(1);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error creating a new ad.", e);
+        }
     }
 }
