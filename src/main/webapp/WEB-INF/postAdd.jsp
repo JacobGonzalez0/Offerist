@@ -24,37 +24,39 @@
 
     <c:if test="${empty error}">
 
-        <div class="container"> 
-
-            <div class="row">
-
-                <div class="d-flex justify-content-center">
-                    <form action="/post/add" method="post" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label for="title">Title</label>
-                            <input id="title" name="title" class="form-control" type="text">
-                        </div>
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <input id="description" name="description" class="form-control" type="text">
-                        </div>
-                        <div class="form-group">
-                            <label for="price">Price</label>
-                            <input id="price" name="price" class="form-control" type="text">
-                        </div>
-                        <div class="form-group">
-                            <label for="confirm">Image</label>
-                            <input type="file" id="image" name="image">
-                        </div>
-                        <input type="submit" class="btn btn-primary btn-block">
-                    </form>
-                </div>
-                
-
-            </div>
         
-        </div>
     </c:if>
+
+    <div class="container"> 
+
+        <div class="row">
+
+            <div class="d-flex justify-content-center">
+                <form action="/post/add" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input id="title" name="title" class="form-control" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <input id="description" name="description" class="form-control" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price</label>
+                        <input id="price" name="price" class="form-control" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm">Image</label>
+                        <input type="file" id="image" name="image">
+                    </div>
+                    <input type="submit" class="btn btn-primary btn-block">
+                </form>
+            </div>
+            
+
+        </div>
+        
+    </div>
 
     </body>
 </html>

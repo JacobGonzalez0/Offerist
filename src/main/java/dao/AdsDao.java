@@ -126,7 +126,7 @@ public class AdsDao implements Ads{
     @Override
     public Long insert(Ad ad) {
         try {
-            String insertQuery = "INSERT INTO posts(user_id, title, content, price) VALUES (?, ?, ?, ?)";
+            String insertQuery = "INSERT INTO posts(user_id, title, content, price) VALUES (?, ?, ?, ?);";
             PreparedStatement stmt = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
             stmt.setLong(1, ad.getUserId());
             stmt.setString(2, ad.getTitle());
@@ -134,20 +134,22 @@ public class AdsDao implements Ads{
             stmt.setDouble(4, ad.getPrice());
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
+            //grabs the post id
             rs.next();
             long postId = rs.getLong(1);
 
             //clear the connection objects
             //inserts only first image uploaded
-            stmt = null;
-            insertQuery = "INSERT INTO INSERT images(post_id, url, description) VALUES (?, ?, ?, ?)";
-            stmt = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
-            stmt.setLong(1, postId);
-            stmt.setString(2, ad.getImages().get(0));
-            stmt.setString(3, "Placeholder value");
+            String imageQuery = "INSERT INTO images(post_id, url, description) VALUES (?, ?, ?);";
+            PreparedStatement stmt2 = connection.prepareStatement(imageQuery);
+            stmt2.setLong(1, postId);
+            stmt2.setString(2, ad.getImages().get(0));
+            stmt2.setString(3, "Placeholder value");
+            stmt2.executeUpdate();
             
             return postId;
         } catch (SQLException e) {
+            System.err.println(e);
             throw new RuntimeException("Error creating a new ad.", e);
         }
     }

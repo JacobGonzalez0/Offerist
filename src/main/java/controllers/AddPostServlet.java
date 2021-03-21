@@ -62,12 +62,12 @@ public class AddPostServlet extends HttpServlet {
                     request.getParameter("description"), 
                     Long.valueOf(request.getParameter("price")));
 
-                //start on gathering images
-                List<String> images = new ArrayList<>();
+                
                 if(request.getPart("image") != null){ //check if there is an image or not
                     try{
                         //TODO: check image to see if its valid
-
+                        //start on gathering images
+                        List<String> images = new ArrayList<>();
                         Part image = request.getPart("image"); //get the image data
                         InputStream filecontent = image.getInputStream(); //create file reading stream
                         ByteArrayOutputStream out = new ByteArrayOutputStream(); //a buffer to read the stream to a byte array to avoid file writing
@@ -78,19 +78,22 @@ public class AddPostServlet extends HttpServlet {
                             out.write(bytes, 0, read);
                         }
                         String encodedString = Base64.getEncoder().encodeToString(out.toByteArray()); //we take that byte array and convert it to an encodedString
-                        System.out.println(encodedString);
+                        
                         
                         images.add("data:image/jpeg;base64," + encodedString); //finally we get that encoded string and pass it to the image array
+                        
+                        ad.setImages(images);
+                        DaoFactory.getAdsDao().insert(ad);
+            
+                        request.setAttribute("message","New post created!");
+                        request.getRequestDispatcher("/WEB-INF/postAdd.jsp").forward(request, response);
+                    
                     }catch(Exception e){
-                        request.setAttribute("error","Image upload error");
+                        request.setAttribute("error",e.toString());
                         request.getRequestDispatcher("/WEB-INF/postAdd.jsp").forward(request, response);
                     }
                 }
-                ad.setImages(images);
-                DaoFactory.getAdsDao().insert(ad);
-    
-                request.setAttribute("message","New post created!");
-                request.getRequestDispatcher("/WEB-INF/postAdd.jsp").forward(request, response);
+                
 
             }catch(NumberFormatException e){
         
